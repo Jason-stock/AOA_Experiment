@@ -19,5 +19,6 @@ for i=1:HNum
     ruleOut = layer4(h,cnsqParm,nfs(i,:));
     Y_predict(i,1) = layer5(ruleOut);
 end
-    rmpath(fullfile(pwd, 'Model', 'FIS'));
+
+rmpath(fullfile(pwd, 'Model', 'FIS'));
 end

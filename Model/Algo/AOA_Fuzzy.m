@@ -21,7 +21,7 @@ function [gBest, thenParm, yAll] = AOA_Fuzzy(tIter, H_train, Y_train, particleNu
     
     % --- 計算初始 fitness ---
     for i = 1:particleNum
-        [Y_output, pCnsqParm{i}] = cFIS(H_train, Y_train, baseVarFuzzyN, X(i, :));
+        [Y_output, pCnsqParm{i}] = cFIS_nonlinear(H_train, Y_train, baseVarFuzzyN, X(i, :));
         fitness(i) = RMSE(Y_output, Y_train);
     end
     
@@ -67,7 +67,7 @@ function [gBest, thenParm, yAll] = AOA_Fuzzy(tIter, H_train, Y_train, particleNu
             Xnew(i, :) = min(Xnew(i, :), UB);
             
             % 計算新 fitness
-            [Y_output, pCnsqParm_new] = cFIS(H_train, Y_train, baseVarFuzzyN, Xnew(i, :));
+            [Y_output, pCnsqParm_new] = cFIS_nonlinear(H_train, Y_train, baseVarFuzzyN, Xnew(i, :));
             fNew = RMSE(Y_output, Y_train);
             
             % 如果新解比較好，則更新個體資訊

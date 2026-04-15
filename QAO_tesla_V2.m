@@ -53,8 +53,8 @@ for r = 1:nRuns
     finalRMSEs(r) = lossAll(end);        % 記錄最後 RMSE
 
     %使用approxiamtor預測資料
-    Y_predict_train = approximator(H_train, ifParm, cnsqParm, baseVarFuzzyN);
-    Y_predict_test = approximator(H_test, ifParm, cnsqParm, baseVarFuzzyN);
+    Y_predict_train = approximator_nonlinear(H_train, ifParm, cnsqParm, baseVarFuzzyN);
+    Y_predict_test = approximator_nonlinear(H_test, ifParm, cnsqParm, baseVarFuzzyN);
     
     % --- 判斷是否為目前最佳結果 ---
     if finalRMSEs(r) < bestRMSE
