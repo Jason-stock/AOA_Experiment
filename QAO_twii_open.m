@@ -1,7 +1,7 @@
 % 清理工作區
 clear; clc;
 % 直接寫死您電腦中的絕對路徑，保證一定抓得到
-addpath(genpath('C:\Users\jason\LAB_code\Model'));
+addpath('C:\Users\jason\LAB_code\Model\','FIS\','LossFunc\','Result');
 % ==========================================================
 % 1. 讀取資料與前處理
 % ==========================================================
@@ -52,7 +52,7 @@ Y_test = Y1(501:end) + 1j*Y2(501:end);
 % 5. 模型訓練 (使用 AOA + CFNN)
 % ==========================================================
 nRuns = 1;        % 實驗執行次數
-tIter = 1;        % AOA 的迭代次數
+tIter = 3;        % AOA 的迭代次數
 finalRMSEs = zeros(nRuns,1);
 
 % 用於儲存「最佳」實驗結果的變數
@@ -97,17 +97,17 @@ fprintf('Std   RMSE: %.6f\n', std(finalRMSEs));
 test_target_open = real(Y_test);
 test_pred_open   = real(bestPredTest);
 
-% 呼叫 LossFunc 資料夾內的函式
-best_test_RMSE = RMSE(test_pred_open, test_target_open);
-best_test_MSE  = MSE(test_pred_open, test_target_open);
-best_test_NMSE = NMSE(test_pred_open, test_target_open);
-best_test_SSE  = SSE(test_pred_open, test_target_open);
+% 假設您已經得到了 test_pred_open 與 test_target_open
+Results = CalculateMetrics(test_pred_open, test_target_open);
 
-fprintf('\n========= 最佳解 (Best Run) 測試集 [開盤價] 評估指標 =========\n');
-fprintf('Test RMSE: %.6f\n', best_test_RMSE);
-fprintf('Test MSE : %.6f\n', best_test_MSE);
-fprintf('Test NMSE: %.6f\n', best_test_NMSE);
-fprintf('Test SSE : %.6f\n', best_test_SSE);
+% 直接印出所有指標
+fprintf('\n========= 測試集評估指標 =========\n');
+fprintf('SSE   : %.6f\n', Results.SSE);
+fprintf('MSE   : %.6f\n', Results.MSE);
+fprintf('RMSE  : %.6f\n', Results.RMSE);
+fprintf('MAE   : %.6f\n', Results.MAE);
+fprintf('MAPE  : %.6f %%\n', Results.MAPE);
+fprintf('SMAPE : %.6f %%\n', Results.SMAPE);
 
 % ==========================================================
 % 8. 還原數值與繪圖 (僅繪製開盤價)
@@ -144,4 +144,4 @@ grid on;
 hold off;
 
 % 修改後 (最後一行)
-rmpath(genpath('C:\Users\jason\LAB_code\Model'));
+rmpath('C:\Users\jason\LAB_code\Model\','FIS\','LossFunc\','Result');
